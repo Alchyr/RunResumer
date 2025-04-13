@@ -1,0 +1,7 @@
+{
+  "${modID}:ModConfig": {
+    "TEXT_DICT": {
+      "showShouldCreateNewSaves": "Do you want to create new saves? (this makes them show up in run history)"
+    }
+  }
+}
