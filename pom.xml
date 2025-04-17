@@ -4,6 +4,7 @@
     <properties>
         <modID>RunResumer</modID>
         <author>Alchyr</author>
+        <author>DasWanderer</author>
 
         <!-- Change the path for your system to match your Steam installation. -->
         <steam.windows>C:/Program Files (x86)/steam/steamapps</steam.windows>
@@ -46,6 +47,13 @@
             <version>${ModTheSpire.version}</version>
             <scope>system</scope>
             <systemPath>${steam.path}/workshop/content/646570/1605060445/ModTheSpire.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>basemod</groupId>
+            <artifactId>basemod</artifactId>
+            <version>5.0.0</version>
+            <scope>system</scope>
+            <systemPath>${steam.path}/workshop/content/646570/1605833019/BaseMod.jar</systemPath>
         </dependency>
     </dependencies>
 

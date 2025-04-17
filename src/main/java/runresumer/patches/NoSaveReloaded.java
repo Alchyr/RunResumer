@@ -17,6 +17,8 @@ import com.megacrit.cardcrawl.screens.options.OptionsPanel;
 import javassist.CannotCompileException;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
+import runresumer.ModConfig;
+import runresumer.RunResumer;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -39,7 +41,8 @@ public class NoSaveReloaded {
     public static class NoRunHistory {
         @SpirePrefixPatch
         public static SpireReturn<?> nope(Metrics __instance, boolean death, boolean trueVictor, MonsterGroup monsters) {
-            if (ResumedField.resumed.get(AbstractDungeon.player))
+            boolean shouldSave = ModConfig.showShouldCreateNewSaves;
+            if (!shouldSave && ResumedField.resumed.get(AbstractDungeon.player))
             {
                 return SpireReturn.Return();
             }
@@ -56,7 +59,9 @@ public class NoSaveReloaded {
         @SpirePrefixPatch
         public static SpireReturn<Boolean> noYouShouldNotSave()
         {
-            if (AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
+            boolean shouldSave = ModConfig.showShouldCreateNewSaves;
+
+            if (!shouldSave && AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
             {
                 return SpireReturn.Return(false);
             }
@@ -74,7 +79,11 @@ public class NoSaveReloaded {
         @SpirePrefixPatch
         public static SpireReturn<?> ree(SaveFile h)
         {
-            if (AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
+            boolean shouldSave = ModConfig.showShouldCreateNewSaves;
+
+            logger.info("Should save config value? {}", shouldSave);
+
+            if (!shouldSave && AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
             {
                 CardCrawlGame.loadingSave = false;
                 return SpireReturn.Return(null);
@@ -106,7 +115,9 @@ public class NoSaveReloaded {
 
         @SpirePostfixPatch
         public static void noSaving(OptionsPanel __instance) throws IllegalAccessException {
-            if (AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
+            boolean shouldSave = ModConfig.showShouldCreateNewSaves;
+
+            if (!shouldSave && AbstractDungeon.player != null && ResumedField.resumed.get(AbstractDungeon.player))
             {
                 ExitGameButton button = (ExitGameButton) exitButtonField.get(__instance);
                 button.updateLabel(OptionsPanel.TEXT[15]);
@@ -124,7 +135,9 @@ public class NoSaveReloaded {
     )
     public static class NoChangeNeowAvailability {
         public static boolean allowSave() {
-            return AbstractDungeon.player == null || !ResumedField.resumed.get(AbstractDungeon.player);
+            boolean shouldSave = ModConfig.showShouldCreateNewSaves;
+
+            return AbstractDungeon.player == null || shouldSave || !ResumedField.resumed.get(AbstractDungeon.player);
         }
 
         @SpireInstrumentPatch
