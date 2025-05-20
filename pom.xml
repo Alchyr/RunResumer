@@ -21,7 +21,7 @@
 
     <!-- This information will be displayed in ModTheSpire, the modded launcher. -->
     <name>Run Resumer</name>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
     <!-- Avoid using \ in this description, as they can cause the description to fail to load. -->
     <!-- If you really want to use them, you'll need to "escape" them by putting another one in front, like \\ -->
     <description>A mod that allows continuation from any point in a run in the run history screen.\n\nOnly works for runs performed with this mod enabled.</description>
